@@ -1,33 +1,25 @@
 package vn.hoidanit.laptopshop.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
 public class UserController {
 
     @RequestMapping("/")
-    public String GetHomePage() {
-        return "house";
+    public String GetUserPage(Model model) {
+        model.addAttribute("newUser", new User());
+        return "admin/user/create";
+    }
+
+    @RequestMapping(value="admin/user/create", method = RequestMethod.POST)
+    public String createUserPage(Model model, @ModelAttribute("newUser") User user) {
+        // processing here
+        System.out.println("Log prints out" + user);
+
+        return "success";
     }
 }
-
-
-// using for processing API
-//@RestController
-//public class UserController {
-//
-//    private final UserService userService;
-//
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-//
-//    @GetMapping("/")
-//    public String getHomePage() {
-//        return this.userService.handleHomePage();
-//    }
-//}
