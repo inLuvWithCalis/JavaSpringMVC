@@ -1,21 +1,31 @@
 package vn.hoidanit.laptopshop.domain;
 
-public class User {
-//    id: long
-//    email: String
-//    password: String
-//    fullName: String
-//    address: String;
-//    phone: String
-//
-//    Viết getter, setter, toString
+import jakarta.persistence.*;
 
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String email;
     private String password;
     private String fullName;
     private String address;
     private String phone;
+    private String avatar;
+
+    // role id
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "users")
+    private List<Order> orders;
 
     public long getId() {
         return id;
@@ -63,6 +73,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     @Override
